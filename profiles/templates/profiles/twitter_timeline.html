@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Post Timeline for @{{ username }}</h2>
+  {% if chart_html %}
+    <div>
+      {{ chart_html|safe }}
+    </div>
+  {% else %}
+    <p class="text-muted">No timestamp data available for this user.</p>
+  {% endif %}
+</div>
+{% endblock %}
