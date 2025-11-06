@@ -2,6 +2,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Avg, Count
 from profiles.models import Profile, RawPost
+from profiles.utils.entity_graph import generate_entity_graph
 from profiles.utils.heatmap_gen import generate_activity_heatmap
 from profiles.utils.timeline_gen import generate_timeline_html
 from profiles.utils.wordcloud_gen import generate_wordcloud_base64
@@ -52,4 +53,19 @@ def twitter_heatmap_view(request, username):
         request,
         "profiles/twitter_heatmap.html",
         {"username": username, "image_base64": image_base64},
+    )
+
+def twitter_entity_graph_view(request, username):
+    graph_path = generate_entity_graph(username)
+    graph_html = ""
+
+    # Read the HTML content so we can inject it directly
+    if graph_path and graph_path.endswith(".html"):
+        with open(graph_path, "r", encoding="utf-8") as f:
+            graph_html = f.read()
+
+    return render(
+        request,
+        "profiles/twitter_entity_graph.html",
+        {"username": username, "graph_html": graph_html},
     )

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Entity Graph for @{{ username }}</h2>
+  {% if graph_html %}
+    <div style="height: 700px; overflow: hidden;">
+      {{ graph_html|safe }}
+    </div>
+  {% else %}
+    <p class="text-muted">No entities found for this user.</p>
+  {% endif %}
+</div>
+{% endblock %}
