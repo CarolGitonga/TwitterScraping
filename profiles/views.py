@@ -2,6 +2,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Avg, Count
 from profiles.models import Profile, RawPost
+from profiles.utils.wordcloud_gen import generate_wordcloud_base64
 
 def twitter_sentiment_view(request, username):
     profile = get_object_or_404(Profile, username=username, platform="Twitter")
@@ -25,3 +26,12 @@ def twitter_sentiment_view(request, username):
     }
 
     return render(request, "profiles/twitter_sentiment.html", data)
+
+
+def twitter_wordcloud_view(request, username):
+    image_base64 = generate_wordcloud_base64(username)
+    return render(
+        request,
+        "profiles/twitter_wordcloud.html",
+        {"username": username, "image_base64": image_base64},
+    )

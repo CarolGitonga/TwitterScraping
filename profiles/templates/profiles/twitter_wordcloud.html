@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5 text-center">
+  <h2>Word Cloud for @{{ username }}</h2>
+  {% if image_base64 %}
+    <img src="data:image/png;base64,{{ image_base64 }}" alt="Word Cloud" class="img-fluid rounded shadow-sm">
+  {% else %}
+    <p class="text-muted">No posts found for this user.</p>
+  {% endif %}
+</div>
+{% endblock %}
