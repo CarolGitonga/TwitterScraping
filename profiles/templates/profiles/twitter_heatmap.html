@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5 text-center">
+  <h2>Posting Activity Heatmap for @{{ username }}</h2>
+  {% if image_base64 %}
+    <img src="data:image/png;base64,{{ image_base64 }}" class="img-fluid rounded shadow-sm" alt="Activity Heatmap">
+  {% else %}
+    <p class="text-muted">No timestamp data available for this user.</p>
+  {% endif %}
+</div>
+{% endblock %}

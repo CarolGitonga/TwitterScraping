@@ -2,6 +2,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Avg, Count
 from profiles.models import Profile, RawPost
+from profiles.utils.heatmap_gen import generate_activity_heatmap
 from profiles.utils.timeline_gen import generate_timeline_html
 from profiles.utils.wordcloud_gen import generate_wordcloud_base64
 
@@ -43,4 +44,12 @@ def twitter_timeline_view(request, username):
         request,
         "profiles/twitter_timeline.html",
         {"username": username, "chart_html": chart_html},
+    )
+
+def twitter_heatmap_view(request, username):
+    image_base64 = generate_activity_heatmap(username)
+    return render(
+        request,
+        "profiles/twitter_heatmap.html",
+        {"username": username, "image_base64": image_base64},
     )
