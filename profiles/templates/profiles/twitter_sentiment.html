@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Sentiment Analysis for {{ profile.username|title }}</h2>
+  <p><strong>Platform:</strong> {{ profile.platform }}</p>
+  <p><strong>Average Sentiment Score:</strong> {{ avg_score }}</p>
+  <p>Total Tweets Analyzed: {{ total }}</p>
+
+  <canvas id="sentimentChart" width="400" height="300"></canvas>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('sentimentChart').getContext('2d');
+new Chart(ctx, {
+  type: 'pie',
+  data: {
+    labels: ['Positive', 'Neutral', 'Negative'],
+    datasets: [{
+      data: [{{ positive }}, {{ neutral }}, {{ negative }}],
+      backgroundColor: ['#4CAF50', '#FFC107', '#F44336'],
+    }]
+  },
+  options: {
+    plugins: {
+      title: {
+        display: true,
+        text: 'Sentiment Distribution for @{{ profile.username }}'
+      }
+    }
+  }
+});
+</script>
+{% endblock %}
